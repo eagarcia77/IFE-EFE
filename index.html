@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrices de Evaluación de Factores Internos y Externos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/6.1.1/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>IFE & EFE Matrices Evaluation</h1>
+
+        <section id="explanation">
+            <h2>Explicación</h2>
+            <p><strong>Peso:</strong> La importancia relativa de cada factor, que debe sumar 1.00 en total.</p>
+            <p><strong>Clasificación:</strong> La calificación de cada factor en una escala del 1 al 4, donde 1 es la menor y 4 es la mayor.</p>
+            <p><strong>Peso Ponderado:</strong> El resultado de multiplicar el peso por la clasificación, que muestra el impacto de cada factor.</p>
+        </section>
+
+        <form id="ife-form">
+            <h2>Internal Factor Evaluation (IFE) Matrix</h2>
+            <div class="matrix-section">
+                <h3>Fortalezas</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Peso</th>
+                            <th>Clasificación</th>
+                            <th>Peso Ponderado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ife-strengths-body">
+                        <!-- Rows for IFE strengths will go here -->
+                    </tbody>
+                </table>
+                <button type="button" onclick="addFactor('ife', 'strengths')">Añadir Fortaleza</button>
+            </div>
+            <div class="matrix-section">
+                <h3>Debilidades</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Peso</th>
+                            <th>Clasificación</th>
+                            <th>Peso Ponderado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ife-weaknesses-body">
+                        <!-- Rows for IFE weaknesses will go here -->
+                    </tbody>
+                </table>
+                <button type="button" onclick="addFactor('ife', 'weaknesses')">Añadir Debilidad</button>
+            </div>
+            <tfoot>
+                <tr>
+                    <td>Totales</td>
+                    <td><input type="text" id="ife-total-weight" readonly></td>
+                    <td></td>
+                    <td><input type="text" id="ife-total-score" readonly></td>
+                </tr>
+            </tfoot>
+            <button type="button" onclick="calculateIFE()">Calcular IFE</button>
+        </form>
+
+        <form id="efe-form">
+            <h2>External Factor Evaluation (EFE) Matrix</h2>
+            <div class="matrix-section">
+                <h3>Oportunidades</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Peso</th>
+                            <th>Clasificación</th>
+                            <th>Peso Ponderado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="efe-opportunities-body">
+                        <!-- Rows for EFE opportunities will go here -->
+                    </tbody>
+                </table>
+                <button type="button" onclick="addFactor('efe', 'opportunities')">Añadir Oportunidad</button>
+            </div>
+            <div class="matrix-section">
+                <h3>Amenazas</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>Peso</th>
+                            <th>Clasificación</th>
+                            <th>Peso Ponderado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="efe-threats-body">
+                        <!-- Rows for EFE threats will go here -->
+                    </tbody>
+                </table>
+                <button type="button" onclick="addFactor('efe', 'threats')">Añadir Amenaza</button>
+            </div>
+            <tfoot>
+                <tr>
+                    <td>Totales</td>
+                    <td><input type="text" id="efe-total-weight" readonly></td>
+                    <td></td>
+                    <td><input type="text" id="efe-total-score" readonly></td>
+                </tr>
+            </tfoot>
+            <button type="button" onclick="calculateEFE()">Calcular EFE</button>
+        </form>
+
+        <div class="global-buttons">
+            <button type="button" onclick="resetForms()">Reset All</button>
+            <button type="button" onclick="exportToExcel()">Export All to Excel</button>
+            <button type="button" onclick="exportToWord()">Export All to Word</button>
+        </div>
+
+        <section id="conclusion">
+            <h2>Conclusión</h2>
+            <p id="conclusion-text">Una vez calculadas las matrices, aparecerá aquí un resumen de los hallazgos y recomendaciones.</p>
+        </section>
+        
+        <footer>
+            <p>&copy; 2024 Eduardo Augusto García Rodríguez. Administrador de sistemas de información. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
