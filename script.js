@@ -71,8 +71,7 @@ function updateTotal(matrixType) {
     let totalScore = 0;
 
     weights.forEach(weight => {
-        totalWeight += parseFloat(weight.value)
-                totalWeight += parseFloat(weight.value) || 0;
+        totalWeight += parseFloat(weight.value) || 0;
     });
 
     weightedScores.forEach(score => {
@@ -185,7 +184,7 @@ function generateConclusion() {
 
     conclusionText += "\nFactores EFE:\n";
     conclusionText += generateFactorsConclusion('efe', 'opportunities', "Oportunidades");
-    conclusionText += generateFactorsConclusion('efe', 'threats', "Amenazas");
+        conclusionText += generateFactorsConclusion('efe', 'threats', "Amenazas");
 
     if (ifeTotalScore < 2.50) {
         conclusionText += "\nLa puntuación IFE es menor que el umbral de 2.50, lo que indica que hay áreas internas que necesitan mejorar.\n";
@@ -224,178 +223,3 @@ function generateFactorsConclusion(matrixType, section, sectionTitle) {
     return conclusion + "\n";
 }
 
-// Función para exportar el análisis en formato APA7 a Word
-function exportToWord() {
-    const ifeData = exportMatrixToArray('ife');
-    const efeData = exportMatrixToArray('efe');
-    const conclusionData = document.getElementById('conclusion-text').innerText;
-
-    const doc = new docx.Document({
-        sections: [{
-            properties: {},
-            children: [
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Tabla 1",
-                            bold: true,
-                        }),
-                    ],
-                }),
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Matriz de Evaluación de Factores Internos (IFE) - Fortalezas",
-                            italics: true,
-                        }),
-                    ],
-                }),
-                createTable(ifeData.strengths),
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Totales",
-                            bold: true,
-                        }),
-                        new docx.TextRun({
-                            text: ` ${document.getElementById('ife-total-weight').value}     ${document.getElementById('ife-total-score').value}`,
-                        }),
-                    ],
-                }),
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Tabla 2",
-                            bold: true,
-                        }),
-                    ],
-                }),
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Matriz de Evaluación de Factores Internos (IFE) - Debilidades",
-                            italics: true,
-                        }),
-                    ],
-                }),
-                createTable(ifeData.weaknesses),
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Totales",
-                            bold: true,
-                        }),
-                                                new docx.TextRun({
-                            text: ` ${document.getElementById('ife-total-weight').value}     ${document.getElementById('ife-total-score').value}`,
-                        }),
-                    ],
-                }),
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Tabla 3",
-                            bold: true,
-                        }),
-                    ],
-                }),
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Matriz de Evaluación de Factores Externos (EFE) - Oportunidades",
-                            italics: true,
-                        }),
-                    ],
-                }),
-                createTable(efeData.opportunities),
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Totales",
-                            bold: true,
-                        }),
-                        new docx.TextRun({
-                            text: ` ${document.getElementById('efe-total-weight').value}     ${document.getElementById('efe-total-score').value}`,
-                        }),
-                    ],
-                }),
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Tabla 4",
-                            bold: true,
-                        }),
-                    ],
-                }),
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Matriz de Evaluación de Factores Externos (EFE) - Amenazas",
-                            italics: true,
-                        }),
-                    ],
-                }),
-                createTable(efeData.threats),
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Totales",
-                            bold: true,
-                        }),
-                        new docx.TextRun({
-                            text: ` ${document.getElementById('efe-total-weight').value}     ${document.getElementById('efe-total-score').value}`,
-                        }),
-                    ],
-                }),
-                new docx.Paragraph({
-                    children: [
-                        new docx.TextRun({
-                            text: "Conclusión",
-                            bold: true,
-                        }),
-                    ],
-                }),
-                new docx.Paragraph(conclusionData),
-            ],
-        }],
-    });
-
-    docx.Packer.toBlob(doc).then(blob => {
-        saveAs(blob, "IFE_EFE_Analisis_APA7.docx");
-    });
-}
-
-function createTable(data) {
-    const rows = data.map(row => new docx.TableRow({
-        children: row.map(cell => new docx.TableCell({
-            children: [new docx.Paragraph(cell)],
-        })),
-    }));
-
-    const table = new docx.Table({
-        rows: [
-            new docx.TableRow({
-                children: [
-                    new docx.TableCell({
-                        children: [new docx.Paragraph("Factor")],
-                        borders: { top: { size: 1 }, bottom: { size: 1 } },
-                    }),
-                    new docx.TableCell({
-                        children: [new docx.Paragraph("Peso")],
-                        borders: { top: { size: 1 }, bottom: { size: 1 } },
-                    }),
-                    new docx.TableCell({
-                        children: [new docx.Paragraph("Clasificación")],
-                        borders: { top: { size: 1 }, bottom: { size: 1 } },
-                    }),
-                    new docx.TableCell({
-                        children: [new docx.Paragraph("Peso Ponderado")],
-                        borders: { top: { size: 1 }, bottom: { size: 1 } },
-                    }),
-                ],
-            }),
-            ...rows,
-        ],
-    });
-
-    return table;
-}
